@@ -1,0 +1,28 @@
+﻿@page "/fetchdata"
+@inject HttpClient Http
+
+<h1>Blazor</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (words == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    foreach (var word in words)
+    {
+        <span>@word</span>
+        <br />
+    }
+}
+
+@functions {
+    string[] words;
+
+    protected override async Task OnInitAsync()
+    {
+        words = await Http.GetJsonAsync<string[]>("http://localhost:5001/api/Values");
+    }
+}
